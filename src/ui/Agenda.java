@@ -12,7 +12,8 @@ public class Agenda {
                     "- to view your courses for a specific day, type in - [D]\n" +
                     "- to see your course schedule, type in - [S]\n" +
                     "- to add a course to your schedule, type in - [C]\n" +
-                    "- to quit, type in - [Q]");
+                    "- to quit, type in - [Q]\n" +
+                    "--------------------------------------------------------------------");
             String input = scanner.nextLine();
 
 
