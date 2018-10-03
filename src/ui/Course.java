@@ -1,12 +1,15 @@
 package ui;
 
 
-public class Course {
-    private String name;
+import model.Finder;
+
+public class Course implements Finder {
+    private String code;
+    private String num;
     private int length;
     private int startTime;
     private int endTime;
-    private Boolean[] weekDays;
+    private boolean[] weekDays;
     public static int numCourses = 0;
 
     //REQUIRES: string value name, an integer value between start time between 0 and 24,
@@ -14,25 +17,44 @@ public class Course {
     //MODIFIES: this
     //EFFECTS:  Constructs the course initialising its name, start time, length and week days its on according to
     //          the parameters, as well increasing number of courses by 1
-    public Course (String name, int startTime, int length, Boolean[] weekDays) {
-        this.name = name;
-        this.length = length;
-        this.startTime = startTime;
-        endTime = startTime + length;
-        this.weekDays = new Boolean[5];
-        this.weekDays[0] = weekDays[0];
-        this.weekDays[1] = weekDays[1];
-        this.weekDays[2] = weekDays[2];
-        this.weekDays[3] = weekDays[3];
-        this.weekDays[4] = weekDays[4];
-        numCourses++;
+    public Course (String code, String num, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+        if (inputsValid (code, num, startTime, length, weekDays)) {
+            this.code = code;
+            this.num = num;
+            this.length = length;
+            this.startTime = startTime;
+            endTime = startTime + length;
+            this.weekDays = new boolean[5];
+            this.weekDays[0] = weekDays[0];
+            this.weekDays[1] = weekDays[1];
+            this.weekDays[2] = weekDays[2];
+            this.weekDays[3] = weekDays[3];
+            this.weekDays[4] = weekDays[4];
+            numCourses++;
+        } else {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
     }
 
-    //REQUIRES: nothing
-    //MODIFIES: nothing
-    //EFFECTS:  returns the name of the course
-    public String getName() {
-        return name;
+    public static boolean inputsValid (String code, String num, int startTime, int length, boolean[] weekDays) {
+        return (code != null && num != null && startTime > 0 && length > 0 && weekDays.length == 5);
+    }
+
+    public boolean isOnDay(String day) {
+        if (day.equals("m")) {
+            return weekDays[0];
+        } else if (day.equals("t")) {
+            return weekDays[1];
+        } else if (day.equals("w")) {
+            return weekDays[2];
+        } else if (day.equals("th")) {
+            return weekDays[3];
+        } else if (day.equals("f")) {
+            return weekDays[4];
+        } else {
+            return false;
+        }
     }
 
     //REQUIRES: nothing
@@ -49,12 +71,6 @@ public class Course {
         return endTime;
     }
 
-    //REQUIRES: string value name
-    //MODIFIES: this
-    //EFFECTS:  sets clown's name to the one given as a parameter
-    public void setName(String name) {
-        this.name = name;
-    }
 
     //REQUIRES: an integer value length between 0 and 10
     //MODIFIES: this
@@ -83,11 +99,35 @@ public class Course {
         weekDays[4] = f;
     }
 
-    //REQUIRES: an integer between 0 and 4
-    //MODIFIES: nothing
-    //EFFECTS:  returns true if the course lecture is on this day of the week, false otherwise
-    public Boolean isCourseOnThisDay(int d) {
-        return weekDays[d];
+    public static boolean isDayValid (String day) {
+        if (day.equals("m")) {
+            return true;
+        } else if (day.equals("t")) {
+            return true;
+        } else if (day.equals("w")) {
+            return true;
+        } else if (day.equals("th")) {
+            return true;
+        } else if (day.equals("f")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkCourseSubject(String subject) {
+        return this.code.equals(subject);
+    }
+
+    public String toString() {
+        return "---------------------------\n" + code + " " + num +
+        "\nStart time: " + startTime +
+        "\nEnd time: " + endTime;
+    }
+
+    public String toSave() {
+        return code + "," + num + "," + startTime + "," + length + ","
+                + weekDays[0] + "," + weekDays[1] + "," + weekDays[2] + "," + weekDays[3] + "," + weekDays[4];
     }
 
 
