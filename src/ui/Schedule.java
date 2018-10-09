@@ -5,17 +5,18 @@ import model.Editor;
 import model.Viewer;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Schedule implements Editor, Viewer {
 
     private ArrayList<Course> courseList;
+    private ArrayList<Activity> activityList;
 
     //REQUIRES: nothing
     //MODIFIES: this, weekDays
     //EFFECTS:  constructs a schedule with a course list that has set courses in it
     public Schedule() {
         courseList = new ArrayList<>();
+        activityList = new ArrayList<>();
 
         /*boolean[] b = {true, false, true, false, false};
 
@@ -34,34 +35,54 @@ public class Schedule implements Editor, Viewer {
     }
 
     public void viewSchedule() {
+        System.out.println("Courses:");
         for (Course c : courseList) {
             System.out.println(c);
         }
+        System.out.println("\nActivities:");
+        for (Activity a : activityList) {
+            System.out.println(a);
+        }
     }
 
-    public void viewCoursesOnDay(String day) {
+    public void viewItemsOnDay(String day) {
         if (Course.isDayValid(day)) {
+            System.out.println("Courses:");
             for (Course c : courseList) {
                 if (c.isOnDay(day)) {
                     System.out.println(c);
                 }
             }
+
+            System.out.println("\nActivities:");
+            for (Activity a : activityList) {
+                if (a.isOnDay(day)) {
+                    System.out.println(a);
+                }
+            }
+
         } else {
             System.out.println("You have entered an invalid week day.");
         }
     }
 
-    public void viewCoursesBySubject(String subject) {
+    public void viewItemByName(String subject) {
         boolean areThereNone = true;
         for (Course c : courseList) {
-            if (c.checkCourseSubject(subject)) {
+            if (c.checkItemName(subject)) {
                 System.out.println(c);
                 areThereNone = false;
             }
         }
+        for (Activity a : activityList) {
+            if (a.checkItemName(subject)) {
+                System.out.println(a);
+                areThereNone = false;
+            }
+        }
         if (areThereNone) {
-            System.out.println("!!!! There are either no courses of this subject in your schedule !!!!\n" +
-                    "!!!!              or entered subject code is incorrect.           !!!!\n");
+            System.out.println("!!!! There are either no items with this name in your schedule !!!!\n" +
+                    "!!!!              or entered name is incorrect.                !!!!\n");
         }
     }
 
@@ -69,6 +90,15 @@ public class Schedule implements Editor, Viewer {
         try {
             Course newCourse = new Course(code, num, startTime, length, weekDays);
             courseList.add(newCourse);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+    }
+
+    public void  addActivity(String name, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+        try {
+            Activity newActivity = new Activity(name, startTime, length, weekDays);
+            activityList.add(newActivity);
         } catch (IllegalArgumentException e) {
             throw e;
         }
@@ -97,7 +127,11 @@ public class Schedule implements Editor, Viewer {
         return courses;
     }
 
-/*
+    public ArrayList<Course> getCourseList() {
+        return courseList;
+    }
+
+    /*
     public void deleteCourse(){
 
     }

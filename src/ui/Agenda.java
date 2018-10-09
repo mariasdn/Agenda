@@ -1,14 +1,13 @@
 package ui;
 
 //import java.util.InputMismatchException;
-import com.sun.xml.internal.fastinfoset.util.StringArray;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Agenda {
-    private Schedule s;
+    public Schedule s;
     private  Scanner scanner;
 //    private ToDoList tdl;
 
@@ -34,16 +33,16 @@ public class Agenda {
     public void interactionOptions() {
         while (true) {
             System.out.println("==================What would you like to do?========================\n" +
-                    "   - to view certain courses, type in - [V]\n" +
-                    "   - to edit courses, type in - [E]\n" +
+                    "   - to view, type in - [V]\n" +
+                    "   - to edit, type in - [E]\n" +
                     "   - to save your edits, type in [S]\n" +
                     "   - to quit, type in - [Q]\n" +
                     "====================================================================");
             String input = scanner.nextLine();
             if (input.equals("V")) {
-                viewCourses();
+                viewItems();
             } else if (input.equals("E")) {
-                editCourses();
+                editItems();
             } else if (input.equals("S")) {
                 saveCourses();
             } else if (input.equals("Q")) {
@@ -55,25 +54,25 @@ public class Agenda {
         }
     }
 
-    private void viewCourses () {
+    private void viewItems() {
         while (true) {
-            System.out.println("--------------------Viewing courses-----------------------\n" +
+            System.out.println("--------------------Viewing items-----------------------\n" +
                     "   - to view the entire schedule, type in - [s]\n" +
-                    "   - to view courses on a certain day, type in - [d]\n" +
-                    "   - to view courses of a certain subject, type in - [f]\n" +
+                    "   - to view items on a certain day, type in - [d]\n" +
+                    "   - to view items with a certain name, type in - [n]\n" +
                     "   - to go back, type in - [b]\n" +
-                    "----------------------------------------------------------");
+                    "--------------------------------------------------------");
             String input = scanner.nextLine();
             if (input.equals("s")) {
                 s.viewSchedule();
             } else if (input.equals("d")) {
                 System.out.println("Please enter the day you are interested in. One of [m],[t],[w],[th] or [f]");
                 String day = scanner.nextLine();
-                s.viewCoursesOnDay(day);
-            } else if (input.equals("f")) {
-                System.out.println("Please enter the subject code you are interested in.");
+                s.viewItemsOnDay(day);
+            } else if (input.equals("n")) {
+                System.out.println("Please enter the name of an item you are interested in.");
                 String subject = scanner.nextLine();
-                s.viewCoursesBySubject(subject);
+                s.viewItemByName(subject);
             } else if (input.equals("b")) {
                 break;
             } else {
@@ -83,16 +82,17 @@ public class Agenda {
         }
     }
 
-    private void editCourses () {
+    private void editItems() {
         while (true) {
-            System.out.println("----------------Editing courses-------------------\n" +
-                    "   - to add a course, type in - [a]\n" +
-                    "   - to delete a course, type in - [d]\n" +
-                    "   - to change course information, type in - [c]\n" +
+            System.out.println("----------------Editing items-------------------\n" +
+                    "   - to add a course, type in - [ac]\n" +
+                    "   - to add an activity, type in - [aa]\n" +
+                    "   - to delete an item, type in - [d]\n" +
+                    "   - to change item's information, type in - [c]\n" +
                     "   - to go back, type in - [b]\n" +
-                    "--------------------------------------------------");
+                    "------------------------------------------------");
             String input = scanner.nextLine();
-            if (input.equals("a")) {
+            if (input.equals("ac")) {
                 System.out.println("Please enter course's subject code.");
                 String code = scanner.nextLine();
                 System.out.println("Please enter course number.");
@@ -123,6 +123,35 @@ public class Agenda {
                 } catch (IllegalArgumentException e) {
                     System.out.println("You have entered invalid information.");
                 }
+            } else if (input.equals("aa")) {
+                System.out.println("Please enter name of the activity.");
+                String name = scanner.nextLine();
+                int startTime = 0;
+                int length = 0;
+                while (true) {
+                    System.out.println("Please enter start time of " + name);
+                    try {
+                        startTime = Integer.parseInt(scanner.nextLine());
+                        break;
+                    } catch (NumberFormatException e){
+                        System.out.println("Invalid input!");
+                    }
+                }
+                while (true) {
+                    System.out.println("Please enter length of " + name);
+                    try {
+                        length = Integer.parseInt(scanner.nextLine());
+                        break;
+                    } catch (NumberFormatException e){
+                        System.out.println("Invalid input!");
+                    }
+                }
+                boolean[] weekDays = inputWeekDays();
+                try {
+                    s.addActivity(name, startTime, length, weekDays);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("You have entered invalid information.");
+                }
             } else if (input.equals("d")) {
                 //s.deleteCourse();
             } else if (input.equals("c")) {
@@ -136,7 +165,7 @@ public class Agenda {
         }
     }
 
-    private void saveCourses () {
+    public void saveCourses () {
         try {
             PrintWriter pw = new PrintWriter(new File("Save.txt"));
             ArrayList<String> courses = s.coursesAsString();
@@ -152,7 +181,7 @@ public class Agenda {
     private boolean[] inputWeekDays() {
         boolean[] weekDays = new boolean[5];
         while (true) {
-            System.out.println("Please enter a week day the lecture is on (one of [m],[t],[w].[th] or [f],/n" +
+            System.out.println("Please enter a week day it is on (one of [m],[t],[w].[th] or [f],\n" +
                     " if there are no more days enter [q]");
             String day = scanner.nextLine();
             if (day.equals("q")) {

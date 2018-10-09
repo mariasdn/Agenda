@@ -1,0 +1,5 @@
+COMM,290,8,2,true,false,true,false,false
+COMM,205,10,2,false,false,true,false,true
+COMM,295,9,2,false,true,false,true,false
+CPSC,210,14,2,true,false,true,false,true
+MATH,200,12,3,false,true,false,true,false

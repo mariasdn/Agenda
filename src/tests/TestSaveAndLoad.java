@@ -2,14 +2,18 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import ui.Agenda;
 import ui.Course;
+import ui.Schedule;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestCourse {
+public class TestSaveAndLoad {
+    Schedule s;
     Course c;
+    Agenda myAgenda;
     private String code;
     private String num;
     private int startTime;
@@ -18,6 +22,8 @@ public class TestCourse {
 
     @BeforeEach
     public void doEachTime() {
+        myAgenda = new Agenda();
+        s = new Schedule();
         code = "CPSC";
         num = "213";
         startTime = 12;
@@ -25,29 +31,12 @@ public class TestCourse {
         c = new Course(code, num, startTime, length, b);
     }
 
-    @Test
-    public void testInputsValid() {
-        length = 0;
-        assertFalse(c.inputsValid(code, num, startTime, length, b));
-    }
-
-    @Test
-    public void testIsOnDay() {
-        assertTrue(c.isOnDay("m"));
-        assertFalse(c.isOnDay("t"));
-    }
-
-    @Test
-    public void testIsDayValid() {
-        assertTrue(c.isDayValid("f"));
-        assertFalse(c.isDayValid("g"));
-    }
-
-    @Test
-    public void testCheckCourseSubject() {
-        assertTrue(c.checkItemName("CPSC"));
-        assertFalse(c.checkItemName("123"));
-    }
-
+    /*@Test
+    public void testSaveAndLoad() {
+        myAgenda.s.addCourse(code, num, startTime, length, b);
+        myAgenda.saveCourses();
+        Agenda agenda2 = new Agenda();
+        assertEquals(agenda2.s.getCourseList(), myAgenda.s.getCourseList());
+    }*/
 
 }
