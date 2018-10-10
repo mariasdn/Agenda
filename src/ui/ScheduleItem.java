@@ -3,6 +3,7 @@ package ui;
 import model.Finder;
 
 public abstract class ScheduleItem implements Finder {
+    protected String itemType;
     protected int startTime;
     protected int length;
     protected int endTime;

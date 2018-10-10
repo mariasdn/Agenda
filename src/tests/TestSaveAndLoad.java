@@ -34,7 +34,7 @@ public class TestSaveAndLoad {
     /*@Test
     public void testSaveAndLoad() {
         myAgenda.s.addCourse(code, num, startTime, length, b);
-        myAgenda.saveCourses();
+        myAgenda.saveEdits();
         Agenda agenda2 = new Agenda();
         assertEquals(agenda2.s.getCourseList(), myAgenda.s.getCourseList());
     }*/

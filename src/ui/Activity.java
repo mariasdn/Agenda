@@ -5,6 +5,7 @@ public class Activity extends ScheduleItem {
 
     public Activity (String name, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
         if (inputsValid(name, startTime, length, weekDays)) {
+            this.itemType = "activity";
             this.name = name;
             this.length = length;
             this.startTime = startTime;
@@ -31,7 +32,7 @@ public class Activity extends ScheduleItem {
 
     @Override
     public String toSave() {
-        return name + "," + startTime + "," + length + ","
+        return itemType + "," + name + "," + startTime + "," + length + ","
                 + weekDays[0] + "," + weekDays[1] + "," + weekDays[2] + "," + weekDays[3] + "," + weekDays[4];
     }
 }

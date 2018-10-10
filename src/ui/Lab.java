@@ -1,20 +1,12 @@
 package ui;
 
-
-import model.Finder;
-
-public class Course extends ScheduleItem {
+public class Lab extends ScheduleItem {
     private String code;
     private String num;
 
-    //REQUIRES: string value name, an integer value between start time between 0 and 24,
-    //          an integer value length between 0 and 10, boolean array week days
-    //MODIFIES: this
-    //EFFECTS:  Constructs the course initialising its name, start time, length and week days its on according to
-    //          the parameters, as well increasing number of courses by 1
-    public Course (String code, String num, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+    public Lab (String code, String num, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
         if (inputsValid (code, num, startTime, length, weekDays)) {
-            this.itemType = "course";
+            this.itemType = "lab";
             this.code = code;
             this.num = num;
             this.length = length;
@@ -51,6 +43,4 @@ public class Course extends ScheduleItem {
     public boolean checkItemName(String name) {
         return this.code.equals(name);
     }
-
-
 }
