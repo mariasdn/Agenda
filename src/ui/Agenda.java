@@ -139,7 +139,7 @@ public class Agenda {
                     this.s.addCourse(data);
                 } else if (data[0].equals("lab")) {
                     this.s.addLab(data);
-                } else if (data.equals("activity")) {
+                } else if (data[0].equals("activity")) {
                     this.s.addActivity(data);
                 }
             }
