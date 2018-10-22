@@ -2,6 +2,9 @@ package ui;
 
 //import java.util.InputMismatchException;
 
+import exceptions.InvalidArgumentException;
+import exceptions.InvalidWeekDayException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -68,7 +71,11 @@ public class Agenda {
             } else if (input.equals("d")) {
                 System.out.println("Please enter the day you are interested in. One of [m],[t],[w],[th] or [f]");
                 String day = scanner.nextLine();
-                s.viewItemsOnDay(day);
+                try{
+                    s.viewItemsOnDay(day);
+                } catch (InvalidWeekDayException e) {
+                    System.out.println(e.getMessage());
+                }
             } else if (input.equals("n")) {
                 System.out.println("Please enter the name of an item you are interested in.");
                 String subject = scanner.nextLine();
@@ -127,6 +134,8 @@ public class Agenda {
             pw.close();
         } catch (FileNotFoundException e) {
             System.exit(-1);
+        } finally {
+            System.out.println("Your edits have not been saved");
         }
     }
 
@@ -174,7 +183,7 @@ public class Agenda {
         boolean[] weekDays = inputWeekDays();
         try {
             s.addActivity(name, startTime, length, weekDays);
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }
     }
@@ -207,7 +216,7 @@ public class Agenda {
         boolean[] weekDays = inputWeekDays();
         try {
             s.addCourse(code, num, startTime, length, weekDays);
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }
         while (true) {
@@ -248,7 +257,7 @@ public class Agenda {
         boolean[] weekDays = inputWeekDays();
         try {
             s.addLab(code, num, startTime, length, weekDays);
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }
     }
@@ -256,23 +265,29 @@ public class Agenda {
     private boolean[] inputWeekDays() {
         boolean[] weekDays = new boolean[5];
         while (true) {
-            System.out.println("Please enter a week day it is on (one of [m],[t],[w].[th] or [f];\n" +
-                    " if there are no more days, enter [q]");
-            String day = scanner.nextLine();
-            if (day.equals("q")) {
-                return weekDays;
-            } else if (day.equals("m")) {
-                weekDays[0] = true;
-            } else if (day.equals("t")) {
-                weekDays[1] = true;
-            } else if (day.equals("w")) {
-                weekDays[2] = true;
-            } else if (day.equals("th")) {
-                weekDays[3] = true;
-            } else if (day.equals("f")) {
-                weekDays[4] = true;
-            } else {
-                System.out.println("You have entered invalid week day.");
+            try {
+                System.out.println("Please enter a week day it is on (one of [m],[t],[w].[th] or [f];\n" +
+                        " if there are no more days, enter [q]");
+                String day = scanner.nextLine();
+                if (day.equals("q")) {
+                    return weekDays;
+                } else if (day.equals("m")) {
+                    weekDays[0] = true;
+                } else if (day.equals("t")) {
+                    weekDays[1] = true;
+                } else if (day.equals("w")) {
+                    weekDays[2] = true;
+                } else if (day.equals("th")) {
+                    weekDays[3] = true;
+                } else if (day.equals("f")) {
+                    weekDays[4] = true;
+                } else {
+                    throw new InvalidWeekDayException("You have entered an invalid week day.");
+                }
+            } catch (InvalidWeekDayException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                System.out.println("Please tyr again");
             }
         }
     }

@@ -1,10 +1,12 @@
 package ui;
 
+import exceptions.InvalidArgumentException;
+
 public class Lab extends ScheduleItem {
     private String code;
     private String num;
 
-    public Lab (String code, String num, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+    public Lab (String code, String num, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         if (inputsValid (code, num, startTime, length, weekDays)) {
             this.itemType = "lab";
             this.code = code;
@@ -19,7 +21,7 @@ public class Lab extends ScheduleItem {
             this.weekDays[3] = weekDays[3];
             this.weekDays[4] = weekDays[4];
         } else {
-            throw new IllegalArgumentException("Invalid arguments");
+            throw new InvalidArgumentException("Invalid input");
         }
 
     }

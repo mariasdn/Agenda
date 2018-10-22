@@ -1,6 +1,8 @@
 package ui;
 
 
+import exceptions.InvalidArgumentException;
+import exceptions.InvalidWeekDayException;
 import model.Editor;
 import model.Viewer;
 
@@ -51,7 +53,7 @@ public class Schedule implements Editor, Viewer {
         }
     }
 
-    public void viewItemsOnDay(String day) {
+    public void viewItemsOnDay(String day) throws InvalidWeekDayException{
         if (Course.isDayValid(day)) {
             System.out.println("Courses:");
             for (Course c : courseList) {
@@ -73,7 +75,7 @@ public class Schedule implements Editor, Viewer {
             }
 
         } else {
-            System.out.println("You have entered an invalid week day.");
+            throw new InvalidWeekDayException("You have entered an invalid week day.");
         }
     }
 
@@ -97,76 +99,88 @@ public class Schedule implements Editor, Viewer {
         }
     }
 
-    public void addCourse(String code, String num, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+    public void addCourse(String code, String num, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         try {
             Course newCourse = new Course(code, num, startTime, length, weekDays);
             courseList.add(newCourse);
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidArgumentException e) {
             throw e;
         }
     }
 
     public void addCourse (String[] sr) {
-        String c = sr[1];
-        String n = sr[2];
-        int st = Integer.parseInt(sr[3]);
-        int l = Integer.parseInt(sr[4]);
-        boolean m = Boolean.valueOf(sr[5]);
-        boolean t = Boolean.valueOf(sr[6]);
-        boolean w = Boolean.valueOf(sr[7]);
-        boolean th = Boolean.valueOf(sr[8]);
-        boolean f = Boolean.valueOf(sr[9]);
-        boolean[] wd = {m,t,w,th,f};
-        Course newCourse = new Course(c,n,st,l,wd);
-        courseList.add(newCourse);
+        try {
+            String c = sr[1];
+            String n = sr[2];
+            int st = Integer.parseInt(sr[3]);
+            int l = Integer.parseInt(sr[4]);
+            boolean m = Boolean.valueOf(sr[5]);
+            boolean t = Boolean.valueOf(sr[6]);
+            boolean w = Boolean.valueOf(sr[7]);
+            boolean th = Boolean.valueOf(sr[8]);
+            boolean f = Boolean.valueOf(sr[9]);
+            boolean[] wd = {m, t, w, th, f};
+            Course newCourse = new Course(c, n, st, l, wd);
+            courseList.add(newCourse);
+        } catch (InvalidArgumentException e) {
+            System.out.println("Saved file is corrupted");
+        }
     }
 
 
-    public void addLab(String code, String num, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+    public void addLab(String code, String num, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         try {
             Lab newLab = new Lab(code, num, startTime, length, weekDays);
             labList.add(newLab);
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidArgumentException e) {
             throw e;
         }
     }
 
     public void addLab (String[] sr) {
-        String c = sr[1];
-        String n = sr[2];
-        int st = Integer.parseInt(sr[3]);
-        int l = Integer.parseInt(sr[4]);
-        boolean m = Boolean.valueOf(sr[5]);
-        boolean t = Boolean.valueOf(sr[6]);
-        boolean w = Boolean.valueOf(sr[7]);
-        boolean th = Boolean.valueOf(sr[8]);
-        boolean f = Boolean.valueOf(sr[9]);
-        boolean[] wd = {m,t,w,th,f};
-        Lab newLab = new Lab(c,n,st,l,wd);
-        labList.add(newLab);
+        try {
+            String c = sr[1];
+            String n = sr[2];
+            int st = Integer.parseInt(sr[3]);
+            int l = Integer.parseInt(sr[4]);
+            boolean m = Boolean.valueOf(sr[5]);
+            boolean t = Boolean.valueOf(sr[6]);
+            boolean w = Boolean.valueOf(sr[7]);
+            boolean th = Boolean.valueOf(sr[8]);
+            boolean f = Boolean.valueOf(sr[9]);
+            boolean[] wd = {m, t, w, th, f};
+            Lab newLab = new Lab(c, n, st, l, wd);
+            labList.add(newLab);
+        } catch (InvalidArgumentException e) {
+            System.out.println("Saved file is corrupted");
+        }
     }
 
-    public void  addActivity(String name, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+    public void  addActivity(String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         try {
             Activity newActivity = new Activity(name, startTime, length, weekDays);
             activityList.add(newActivity);
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidArgumentException e) {
             throw e;
         }
     }
 
     public void addActivity (String[] sr) {
-        String name = sr[1];
-        int st = Integer.parseInt(sr[2]);
-        int l = Integer.parseInt(sr[3]);
-        boolean m = Boolean.valueOf(sr[4]);
-        boolean t = Boolean.valueOf(sr[5]);
-        boolean w = Boolean.valueOf(sr[6]);
-        boolean th = Boolean.valueOf(sr[7]);
-        boolean f = Boolean.valueOf(sr[8]);
-        boolean[] wd = {m,t,w,th,f};
-        Activity newActivity = new Activity(name,st,l,wd);
-        activityList.add(newActivity);
+        try {
+            String name = sr[1];
+            int st = Integer.parseInt(sr[2]);
+            int l = Integer.parseInt(sr[3]);
+            boolean m = Boolean.valueOf(sr[4]);
+            boolean t = Boolean.valueOf(sr[5]);
+            boolean w = Boolean.valueOf(sr[6]);
+            boolean th = Boolean.valueOf(sr[7]);
+            boolean f = Boolean.valueOf(sr[8]);
+            boolean[] wd = {m, t, w, th, f};
+            Activity newActivity = new Activity(name, st, l, wd);
+            activityList.add(newActivity);
+        } catch (InvalidArgumentException e) {
+            System.out.println("Saved file is corrupted");
+        }
     }
 
     public ArrayList<String> coursesAsString() {

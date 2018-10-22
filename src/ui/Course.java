@@ -1,6 +1,7 @@
 package ui;
 
 
+import exceptions.InvalidArgumentException;
 import model.Finder;
 
 public class Course extends ScheduleItem {
@@ -12,7 +13,7 @@ public class Course extends ScheduleItem {
     //MODIFIES: this
     //EFFECTS:  Constructs the course initialising its name, start time, length and week days its on according to
     //          the parameters, as well increasing number of courses by 1
-    public Course (String code, String num, int startTime, int length, boolean[] weekDays) throws IllegalArgumentException {
+    public Course (String code, String num, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         if (inputsValid (code, num, startTime, length, weekDays)) {
             this.itemType = "course";
             this.code = code;
@@ -27,7 +28,7 @@ public class Course extends ScheduleItem {
             this.weekDays[3] = weekDays[3];
             this.weekDays[4] = weekDays[4];
         } else {
-            throw new IllegalArgumentException("Invalid arguments");
+            throw new InvalidArgumentException("Invalid arguments");
         }
 
     }

@@ -1,5 +1,6 @@
 package tests;
 
+import exceptions.InvalidArgumentException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import ui.Agenda;
@@ -28,7 +29,11 @@ public class TestSaveAndLoad {
         num = "213";
         startTime = 12;
         length = 3;
-        c = new Course(code, num, startTime, length, b);
+        try {
+            c = new Course(code, num, startTime, length, b);
+        } catch (InvalidArgumentException e ) {
+
+        }
     }
 
     /*@Test
