@@ -62,7 +62,7 @@ public class Agenda {
             System.out.println("--------------------Viewing items-----------------------\n" +
                     "   - to view the entire schedule, type in - [s]\n" +
                     "   - to view items on a certain day, type in - [d]\n" +
-                    "   - to view items with a certain name, type in - [n]\n" +
+                    "   - to view a certain item, type in - [n]\n" +
                     "   - to go back, type in - [b]\n" +
                     "--------------------------------------------------------");
             String input = scanner.nextLine();
@@ -77,9 +77,9 @@ public class Agenda {
                     System.out.println(e.getMessage());
                 }
             } else if (input.equals("n")) {
-                System.out.println("Please enter the name of an item you are interested in.");
+                System.out.println("Please enter a name of an activity you are interested in or a course code.");
                 String subject = scanner.nextLine();
-                s.viewItemByName(subject);
+                s.viewItemsByName(subject);
             } else if (input.equals("b")) {
                 break;
             } else {
@@ -104,7 +104,7 @@ public class Agenda {
             } else if (input.equals("aa")) {
                 userAddsActivity();
             } else if (input.equals("d")) {
-                //s.deleteCourse();
+                userDeletesItem();
             } else if (input.equals("c")) {
                 //s.changeCourse();
             } else if (input.equals("b")) {
@@ -135,7 +135,7 @@ public class Agenda {
         } catch (FileNotFoundException e) {
             System.exit(-1);
         } finally {
-            System.out.println("Your edits have not been saved");
+            System.out.println("Save is over");
         }
     }
 
@@ -290,6 +290,11 @@ public class Agenda {
                 System.out.println("Please tyr again");
             }
         }
+    }
+
+    public void userDeletesItem() {
+        System.out.println("Please enter a name of an item you would like to delete");
+        s.deleteItem(scanner.nextLine());
     }
 
     public static void main(String[] args) {

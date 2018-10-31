@@ -6,21 +6,31 @@ import exceptions.InvalidWeekDayException;
 import model.Editor;
 import model.Viewer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import java.util.ArrayList;
 
 public class Schedule implements Editor, Viewer {
 
+    private Map<String, Course> courseMap;
+    private Map<String, Lab> labMap;
+    private Map<String, Activity> activityMap;
     private ArrayList<Course> courseList;
-    private ArrayList<Activity> activityList;
     private ArrayList<Lab> labList;
+    private ArrayList<Activity> activityList;
+
 
     //REQUIRES: nothing
     //MODIFIES: this, weekDays
     //EFFECTS:  constructs a schedule with a course list that has set courses in it
     public Schedule() {
+        courseMap = new HashMap<>();
+        labMap = new HashMap<>();
+        activityMap = new HashMap<>();
         courseList = new ArrayList<>();
-        activityList = new ArrayList<>();
         labList = new ArrayList<>();
+        activityList = new ArrayList<>();
 
         /*boolean[] b = {true, false, true, false, false};
 
@@ -79,19 +89,17 @@ public class Schedule implements Editor, Viewer {
         }
     }
 
-    public void viewItemByName(String subject) {
+    public void viewItemsByName(String subject) {
         boolean areThereNone = true;
-        for (Course c : courseList) {
-            if (c.checkItemName(subject)) {
-                System.out.println(c);
-                areThereNone = false;
-            }
-        }
-        for (Activity a : activityList) {
-            if (a.checkItemName(subject)) {
-                System.out.println(a);
-                areThereNone = false;
-            }
+        if (courseMap.get(subject)!= null) {
+            System.out.println(courseMap.get(subject));
+            areThereNone = false;
+        } else if (labMap.get(subject)!= null) {
+            System.out.println(labMap.get(subject));
+            areThereNone = false;
+        } else if (activityMap.get(subject)!= null) {
+            System.out.println(activityMap.get(subject));
+            areThereNone = false;
         }
         if (areThereNone) {
             System.out.println("!!!! There are either no items with this name in your schedule !!!!\n" +
@@ -103,6 +111,7 @@ public class Schedule implements Editor, Viewer {
         try {
             Course newCourse = new Course(code, num, startTime, length, weekDays);
             courseList.add(newCourse);
+            courseMap.put(code + " " + num,newCourse);
         } catch (InvalidArgumentException e) {
             throw e;
         }
@@ -122,6 +131,7 @@ public class Schedule implements Editor, Viewer {
             boolean[] wd = {m, t, w, th, f};
             Course newCourse = new Course(c, n, st, l, wd);
             courseList.add(newCourse);
+            courseMap.put(c + " " + n,newCourse);
         } catch (InvalidArgumentException e) {
             System.out.println("Saved file is corrupted");
         }
@@ -132,6 +142,7 @@ public class Schedule implements Editor, Viewer {
         try {
             Lab newLab = new Lab(code, num, startTime, length, weekDays);
             labList.add(newLab);
+            labMap.put(code + " " + num,newLab);
         } catch (InvalidArgumentException e) {
             throw e;
         }
@@ -151,6 +162,7 @@ public class Schedule implements Editor, Viewer {
             boolean[] wd = {m, t, w, th, f};
             Lab newLab = new Lab(c, n, st, l, wd);
             labList.add(newLab);
+            labMap.put(c + " " + n,newLab);
         } catch (InvalidArgumentException e) {
             System.out.println("Saved file is corrupted");
         }
@@ -160,6 +172,7 @@ public class Schedule implements Editor, Viewer {
         try {
             Activity newActivity = new Activity(name, startTime, length, weekDays);
             activityList.add(newActivity);
+            activityMap.put(name,newActivity);
         } catch (InvalidArgumentException e) {
             throw e;
         }
@@ -178,6 +191,7 @@ public class Schedule implements Editor, Viewer {
             boolean[] wd = {m, t, w, th, f};
             Activity newActivity = new Activity(name, st, l, wd);
             activityList.add(newActivity);
+            activityMap.put(name,newActivity);
         } catch (InvalidArgumentException e) {
             System.out.println("Saved file is corrupted");
         }
@@ -211,11 +225,39 @@ public class Schedule implements Editor, Viewer {
         return courseList;
     }
 
-    /*
-    public void deleteCourse(){
 
+    public void deleteItem(String name){
+        boolean areThereNone = true;
+        Course c = courseMap.get(name);
+        Lab l = labMap.get(name);
+        Activity a = activityMap.get(name);
+        if (c!= null) {
+            courseList.remove(c);
+            courseMap.remove(name);
+            System.out.println(c);
+            System.out.println("COURSE WAS SUCCESSFULLY DELETED");
+            areThereNone = false;
+        }
+        if (l!= null) {
+            labList.remove(l);
+            labMap.remove(name);
+            System.out.println(l);
+            System.out.println("LAB WAS SUCCESSFULLY DELETED");
+            areThereNone = false;
+        }
+        if (a!= null) {
+            activityList.remove(a);
+            activityMap.remove(name);
+            System.out.println(a);
+            System.out.println("ACTIVITY WAS SUCCESSFULLY DELETED");
+            areThereNone = false;
+        }
+        if (areThereNone) {
+            System.out.println("!!!! There are either no items with this name in your schedule !!!!\n" +
+                    "!!!!              or entered name is incorrect.                !!!!\n");
+        }
     }
-
+/*
     public void changeCourse() {
 
     }
