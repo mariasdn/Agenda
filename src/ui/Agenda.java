@@ -95,7 +95,6 @@ public class Agenda {
                     "   - to add a course, type in - [ac]\n" +
                     "   - to add an activity, type in - [aa]\n" +
                     "   - to delete an item, type in - [d]\n" +
-                    "   - to change item's information, type in - [c]\n" +
                     "   - to go back, type in - [b]\n" +
                     "------------------------------------------------");
             String input = scanner.nextLine();
@@ -105,8 +104,6 @@ public class Agenda {
                 userAddsActivity();
             } else if (input.equals("d")) {
                 userDeletesItem();
-            } else if (input.equals("c")) {
-                //s.changeCourse();
             } else if (input.equals("b")) {
                 break;
             } else {
@@ -144,13 +141,7 @@ public class Agenda {
             String st;
             while ((st = br.readLine()) != null) {
                 String[] data = st.split(",");
-                if (data[0].equals("course")) {
-                    this.s.addCourse(data);
-                } else if (data[0].equals("lab")) {
-                    this.s.addLab(data);
-                } else if (data[0].equals("activity")) {
-                    this.s.addActivity(data);
-                }
+                this.s.addItem(data);
             }
         } catch (IOException e) {
             System.exit(-1);
@@ -215,7 +206,7 @@ public class Agenda {
         }
         boolean[] weekDays = inputWeekDays();
         try {
-            s.addCourse(code, num, startTime, length, weekDays);
+            s.addCourse(code + num, startTime, length, weekDays);
         } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }
@@ -256,7 +247,7 @@ public class Agenda {
         }
         boolean[] weekDays = inputWeekDays();
         try {
-            s.addLab(code, num, startTime, length, weekDays);
+            s.addLab(code + num, startTime, length, weekDays);
         } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }

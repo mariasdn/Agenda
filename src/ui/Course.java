@@ -2,56 +2,15 @@ package ui;
 
 
 import exceptions.InvalidArgumentException;
-import model.Finder;
 
 public class Course extends ScheduleItem {
-    private String code;
-    private String num;
-
     //REQUIRES: string value name, an integer value between start time between 0 and 24,
     //          an integer value length between 0 and 10, boolean array week days
     //MODIFIES: this
     //EFFECTS:  Constructs the course initialising its name, start time, length and week days its on according to
     //          the parameters, as well increasing number of courses by 1
-    public Course (String code, String num, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
-        if (inputsValid (code, num, startTime, length, weekDays)) {
-            this.itemType = "course";
-            this.code = code;
-            this.num = num;
-            this.length = length;
-            this.startTime = startTime;
-            endTime = startTime + length;
-            this.weekDays = new boolean[5];
-            this.weekDays[0] = weekDays[0];
-            this.weekDays[1] = weekDays[1];
-            this.weekDays[2] = weekDays[2];
-            this.weekDays[3] = weekDays[3];
-            this.weekDays[4] = weekDays[4];
-        } else {
-            throw new InvalidArgumentException("Invalid arguments");
-        }
-
+    public Course (String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
+        super(name,startTime,length,weekDays);
+        this.itemType = "course";
     }
-
-    public boolean inputsValid (String code, String num, int startTime, int length, boolean[] weekDays) {
-        return (code != null && num != null && startTime > 0 && length > 0 && weekDays.length == 5);
-    }
-
-    @Override
-    public String getName() {
-        return this.code + " " + this.num;
-    }
-
-    @Override
-    public String toSave() {
-        return itemType + "," + code + "," + num + "," + startTime + "," + length + ","
-                + weekDays[0] + "," + weekDays[1] + "," + weekDays[2] + "," + weekDays[3] + "," + weekDays[4];
-    }
-
-    @Override
-    public boolean checkItemName(String name) {
-        return this.code.equals(name);
-    }
-
-
 }

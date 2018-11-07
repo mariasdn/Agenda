@@ -107,64 +107,55 @@ public class Schedule implements Editor, Viewer {
         }
     }
 
-    public void addCourse(String code, String num, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
+    public void addItem(String[] sr) {
+        if(sr.length == 9){
+            String name = sr[1];
+            int st = Integer.parseInt(sr[2]);
+            int l = Integer.parseInt(sr[3]);
+            boolean m = Boolean.valueOf(sr[4]);
+            boolean t = Boolean.valueOf(sr[5]);
+            boolean w = Boolean.valueOf(sr[6]);
+            boolean th = Boolean.valueOf(sr[7]);
+            boolean f = Boolean.valueOf(sr[8]);
+            boolean[] wd = {m, t, w, th, f};
+            try {
+                if (sr[0].equals("course")) {
+                    Course newCourse = new Course(name, st, l, wd);
+                    courseList.add(newCourse);
+                    courseMap.put(name, newCourse);
+                } else if (sr[0].equals("lab")) {
+                    Lab newLab = new Lab(name, st, l, wd);
+                    labList.add(newLab);
+                    labMap.put(name, newLab);
+                } else if (sr[0].equals("activity")) {
+                    Activity newActivity = new Activity(name, st, l, wd);
+                    activityList.add(newActivity);
+                    activityMap.put(name, newActivity);
+                }
+            } catch (InvalidArgumentException e) {
+                System.out.println("Saved file is corrupted");
+            }
+        }
+    }
+
+    public void addCourse(String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         try {
-            Course newCourse = new Course(code, num, startTime, length, weekDays);
+            Course newCourse = new Course(name, startTime, length, weekDays);
             courseList.add(newCourse);
-            courseMap.put(code + " " + num,newCourse);
+            courseMap.put(name,newCourse);
         } catch (InvalidArgumentException e) {
             throw e;
         }
     }
 
-    public void addCourse (String[] sr) {
-        try {
-            String c = sr[1];
-            String n = sr[2];
-            int st = Integer.parseInt(sr[3]);
-            int l = Integer.parseInt(sr[4]);
-            boolean m = Boolean.valueOf(sr[5]);
-            boolean t = Boolean.valueOf(sr[6]);
-            boolean w = Boolean.valueOf(sr[7]);
-            boolean th = Boolean.valueOf(sr[8]);
-            boolean f = Boolean.valueOf(sr[9]);
-            boolean[] wd = {m, t, w, th, f};
-            Course newCourse = new Course(c, n, st, l, wd);
-            courseList.add(newCourse);
-            courseMap.put(c + " " + n,newCourse);
-        } catch (InvalidArgumentException e) {
-            System.out.println("Saved file is corrupted");
-        }
-    }
 
-
-    public void addLab(String code, String num, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
+    public void addLab(String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         try {
-            Lab newLab = new Lab(code, num, startTime, length, weekDays);
+            Lab newLab = new Lab(name, startTime, length, weekDays);
             labList.add(newLab);
-            labMap.put(code + " " + num,newLab);
+            labMap.put(name,newLab);
         } catch (InvalidArgumentException e) {
             throw e;
-        }
-    }
-
-    public void addLab (String[] sr) {
-        try {
-            String c = sr[1];
-            String n = sr[2];
-            int st = Integer.parseInt(sr[3]);
-            int l = Integer.parseInt(sr[4]);
-            boolean m = Boolean.valueOf(sr[5]);
-            boolean t = Boolean.valueOf(sr[6]);
-            boolean w = Boolean.valueOf(sr[7]);
-            boolean th = Boolean.valueOf(sr[8]);
-            boolean f = Boolean.valueOf(sr[9]);
-            boolean[] wd = {m, t, w, th, f};
-            Lab newLab = new Lab(c, n, st, l, wd);
-            labList.add(newLab);
-            labMap.put(c + " " + n,newLab);
-        } catch (InvalidArgumentException e) {
-            System.out.println("Saved file is corrupted");
         }
     }
 
@@ -175,25 +166,6 @@ public class Schedule implements Editor, Viewer {
             activityMap.put(name,newActivity);
         } catch (InvalidArgumentException e) {
             throw e;
-        }
-    }
-
-    public void addActivity (String[] sr) {
-        try {
-            String name = sr[1];
-            int st = Integer.parseInt(sr[2]);
-            int l = Integer.parseInt(sr[3]);
-            boolean m = Boolean.valueOf(sr[4]);
-            boolean t = Boolean.valueOf(sr[5]);
-            boolean w = Boolean.valueOf(sr[6]);
-            boolean th = Boolean.valueOf(sr[7]);
-            boolean f = Boolean.valueOf(sr[8]);
-            boolean[] wd = {m, t, w, th, f};
-            Activity newActivity = new Activity(name, st, l, wd);
-            activityList.add(newActivity);
-            activityMap.put(name,newActivity);
-        } catch (InvalidArgumentException e) {
-            System.out.println("Saved file is corrupted");
         }
     }
 
@@ -257,12 +229,5 @@ public class Schedule implements Editor, Viewer {
                     "!!!!              or entered name is incorrect.                !!!!\n");
         }
     }
-/*
-    public void changeCourse() {
-
-    }
-}
-*/
-
 
 }
