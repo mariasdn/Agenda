@@ -13,24 +13,16 @@ import java.util.ArrayList;
 
 public class Schedule implements Editor, Viewer {
 
-    private Map<String, Course> courseMap;
-    private Map<String, Lab> labMap;
-    private Map<String, Activity> activityMap;
-    private ArrayList<Course> courseList;
-    private ArrayList<Lab> labList;
-    private ArrayList<Activity> activityList;
+    private ArrayList<ScheduleItem> items;
+    private Map<String, ScheduleItem> itemMap;
 
 
     //REQUIRES: nothing
     //MODIFIES: this, weekDays
     //EFFECTS:  constructs a schedule with a course list that has set courses in it
     public Schedule() {
-        courseMap = new HashMap<>();
-        labMap = new HashMap<>();
-        activityMap = new HashMap<>();
-        courseList = new ArrayList<>();
-        labList = new ArrayList<>();
-        activityList = new ArrayList<>();
+        items = new ArrayList<>();
+        itemMap = new HashMap<>();
 
         /*boolean[] b = {true, false, true, false, false};
 
@@ -49,39 +41,62 @@ public class Schedule implements Editor, Viewer {
     }
 
     public void viewSchedule() {
+        ArrayList<ScheduleItem> courseList = new ArrayList<>();
+        ArrayList<ScheduleItem> labList = new ArrayList<>();
+        ArrayList<ScheduleItem> activityList = new ArrayList<>();
+
+        for(ScheduleItem si: items) {
+            if (si.getType().equals("Course")) {
+                courseList.add(si);
+            } else if (si.getType().equals("Lab")){
+                labList.add(si);
+            } else if (si.getType().equals("Activity")){
+                activityList.add(si);
+            }
+        }
         System.out.println("Courses:");
-        for (Course c : courseList) {
+        for (ScheduleItem c : courseList) {
             System.out.println(c);
         }
         System.out.println("\nLabs:");
-        for (Lab l : labList) {
+        for (ScheduleItem l : labList) {
             System.out.println(l);
         }
         System.out.println("\nActivities:");
-        for (Activity a : activityList) {
+        for (ScheduleItem a : activityList) {
             System.out.println(a);
         }
     }
 
     public void viewItemsOnDay(String day) throws InvalidWeekDayException{
-        if (Course.isDayValid(day)) {
-            System.out.println("Courses:");
-            for (Course c : courseList) {
-                if (c.isOnDay(day)) {
-                    System.out.println(c);
+        if (ScheduleItem.isDayValid(day)) {
+
+            ArrayList<ScheduleItem> courseList = new ArrayList<>();
+            ArrayList<ScheduleItem> labList = new ArrayList<>();
+            ArrayList<ScheduleItem> activityList = new ArrayList<>();
+
+            for(ScheduleItem si: items) {
+                if (si.isOnDay(day)) {
+                    if (si.getType().equals("Course")) {
+                        courseList.add(si);
+                    } else if (si.getType().equals("Lab")) {
+                        labList.add(si);
+                    } else if (si.getType().equals("Activity")) {
+                        activityList.add(si);
+                    }
                 }
+            }
+            System.out.println("Courses:");
+            for (ScheduleItem c : courseList) {
+                System.out.println(c);
             }
             System.out.println("\nLabs:");
-            for (Lab l : labList) {
-                if (l.isOnDay(day)) {
-                    System.out.println(l);
-                }
+            for (ScheduleItem l : labList) {
+                System.out.println(l);
             }
             System.out.println("\nActivities:");
-            for (Activity a : activityList) {
-                if (a.isOnDay(day)) {
-                    System.out.println(a);
-                }
+            for (ScheduleItem a : activityList) {
+                System.out.println(a);
             }
 
         } else {
@@ -91,14 +106,8 @@ public class Schedule implements Editor, Viewer {
 
     public void viewItemsByName(String subject) {
         boolean areThereNone = true;
-        if (courseMap.get(subject)!= null) {
-            System.out.println(courseMap.get(subject));
-            areThereNone = false;
-        } else if (labMap.get(subject)!= null) {
-            System.out.println(labMap.get(subject));
-            areThereNone = false;
-        } else if (activityMap.get(subject)!= null) {
-            System.out.println(activityMap.get(subject));
+        if (itemMap.get(subject)!= null) {
+            System.out.println(itemMap.get(subject));
             areThereNone = false;
         }
         if (areThereNone) {
@@ -109,6 +118,7 @@ public class Schedule implements Editor, Viewer {
 
     public void addItem(String[] sr) {
         if(sr.length == 9){
+            String itemType = sr[0];
             String name = sr[1];
             int st = Integer.parseInt(sr[2]);
             int l = Integer.parseInt(sr[3]);
@@ -119,109 +129,42 @@ public class Schedule implements Editor, Viewer {
             boolean f = Boolean.valueOf(sr[8]);
             boolean[] wd = {m, t, w, th, f};
             try {
-                if (sr[0].equals("course")) {
-                    Course newCourse = new Course(name, st, l, wd);
-                    courseList.add(newCourse);
-                    courseMap.put(name, newCourse);
-                } else if (sr[0].equals("lab")) {
-                    Lab newLab = new Lab(name, st, l, wd);
-                    labList.add(newLab);
-                    labMap.put(name, newLab);
-                } else if (sr[0].equals("activity")) {
-                    Activity newActivity = new Activity(name, st, l, wd);
-                    activityList.add(newActivity);
-                    activityMap.put(name, newActivity);
-                }
+                ScheduleItem si = new ScheduleItem(itemType,name,st,l,wd);
+                itemMap.put(name,si);
+                items.add(si);
             } catch (InvalidArgumentException e) {
                 System.out.println("Saved file is corrupted");
             }
         }
     }
 
-    public void addCourse(String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
+    public void addItem(String itemType, String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         try {
-            Course newCourse = new Course(name, startTime, length, weekDays);
-            courseList.add(newCourse);
-            courseMap.put(name,newCourse);
+            ScheduleItem newItem = new ScheduleItem(itemType,name, startTime, length, weekDays);
+            items.add(newItem);
+            itemMap.put(name,newItem);
         } catch (InvalidArgumentException e) {
             throw e;
         }
     }
 
-
-    public void addLab(String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
-        try {
-            Lab newLab = new Lab(name, startTime, length, weekDays);
-            labList.add(newLab);
-            labMap.put(name,newLab);
-        } catch (InvalidArgumentException e) {
-            throw e;
+    public ArrayList<String> itemsAsString() {
+        ArrayList<String> results = new ArrayList<>();
+        for (ScheduleItem c: items) {
+            results.add( c.toSave());
         }
-    }
-
-    public void  addActivity(String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
-        try {
-            Activity newActivity = new Activity(name, startTime, length, weekDays);
-            activityList.add(newActivity);
-            activityMap.put(name,newActivity);
-        } catch (InvalidArgumentException e) {
-            throw e;
-        }
-    }
-
-    public ArrayList<String> coursesAsString() {
-        ArrayList<String> courses = new ArrayList<>();
-        for (Course c: courseList) {
-            courses.add( c.toSave());
-        }
-        return courses;
-    }
-
-    public ArrayList<String> labsAsString() {
-        ArrayList<String> labs = new ArrayList<>();
-        for (Lab l: labList) {
-            labs.add( l.toSave());
-        }
-        return labs;
-    }
-
-    public ArrayList<String> activitiesAsString() {
-        ArrayList<String> activities = new ArrayList<>();
-        for (Activity a: activityList) {
-            activities.add( a.toSave());
-        }
-        return activities;
-    }
-
-    public ArrayList<Course> getCourseList() {
-        return courseList;
+        return results;
     }
 
 
     public void deleteItem(String name){
         boolean areThereNone = true;
-        Course c = courseMap.get(name);
-        Lab l = labMap.get(name);
-        Activity a = activityMap.get(name);
-        if (c!= null) {
-            courseList.remove(c);
-            courseMap.remove(name);
-            System.out.println(c);
-            System.out.println("COURSE WAS SUCCESSFULLY DELETED");
-            areThereNone = false;
-        }
-        if (l!= null) {
-            labList.remove(l);
-            labMap.remove(name);
-            System.out.println(l);
-            System.out.println("LAB WAS SUCCESSFULLY DELETED");
-            areThereNone = false;
-        }
-        if (a!= null) {
-            activityList.remove(a);
-            activityMap.remove(name);
-            System.out.println(a);
-            System.out.println("ACTIVITY WAS SUCCESSFULLY DELETED");
+        ScheduleItem si = itemMap.get(name);
+        if (si!= null) {
+            items.remove(si);
+            itemMap.remove(name);
+            System.out.println(si);
+            System.out.println(si.getType() + " was successfully DELETED");
             areThereNone = false;
         }
         if (areThereNone) {

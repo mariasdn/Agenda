@@ -116,17 +116,9 @@ public class Agenda {
     public void saveEdits () {
         try {
             PrintWriter pw = new PrintWriter(new File("Save.txt"));
-            ArrayList<String> courses = s.coursesAsString();
-            ArrayList<String> labs = s.labsAsString();
-            ArrayList<String> activities = s.activitiesAsString();
-            for (String c: courses) {
-                pw.println(c);
-            }
-            for (String l: labs) {
-                pw.println(l);
-            }
-            for (String a: activities) {
-                pw.println(a);
+            ArrayList<String> items = s.itemsAsString();
+            for (String si: items) {
+                pw.println(si);
             }
             pw.close();
         } catch (FileNotFoundException e) {
@@ -173,7 +165,7 @@ public class Agenda {
         }
         boolean[] weekDays = inputWeekDays();
         try {
-            s.addActivity(name, startTime, length, weekDays);
+            s.addItem("Activity", name, startTime, length, weekDays);
         } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }
@@ -184,10 +176,11 @@ public class Agenda {
         String code = scanner.nextLine();
         System.out.println("Please enter course number.");
         String num = scanner.nextLine();
+        String name = code + " " + num;
         int startTime = 0;
         int length = 0;
         while (true) {
-            System.out.println("Please enter start time of the " + code + " " + num + " lecture");
+            System.out.println("Please enter start time of the " + name + " lecture");
             try {
                 startTime = Integer.parseInt(scanner.nextLine());
                 break;
@@ -196,7 +189,7 @@ public class Agenda {
             }
         }
         while (true) {
-            System.out.println("Please enter length of the " + code + " " + num + " lecture");
+            System.out.println("Please enter length of the " + name + " lecture");
             try {
                 length = Integer.parseInt(scanner.nextLine());
                 break;
@@ -206,7 +199,7 @@ public class Agenda {
         }
         boolean[] weekDays = inputWeekDays();
         try {
-            s.addCourse(code + num, startTime, length, weekDays);
+            s.addItem("Course", name, startTime, length, weekDays);
         } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }
@@ -214,7 +207,7 @@ public class Agenda {
             System.out.println("Does this course have a lab? [yes] or [no]");
             String hasLab = scanner.nextLine();
             if (hasLab.equals("yes")) {
-                userAddsLab(code, num);
+                userAddsLab(name);
                 break;
             } else if (hasLab.equals("no")) {
                 break;
@@ -224,11 +217,11 @@ public class Agenda {
         }
     }
 
-    public void userAddsLab(String code, String num) {
+    public void userAddsLab(String name) {
         int startTime = 0;
         int length = 0;
         while (true) {
-            System.out.println("Please enter start time of the " + code + " " + num + " lab");
+            System.out.println("Please enter start time of the " + name + " lab");
             try {
                 startTime = Integer.parseInt(scanner.nextLine());
                 break;
@@ -237,7 +230,7 @@ public class Agenda {
             }
         }
         while (true) {
-            System.out.println("Please enter length of the " + code + " " + num + " lab");
+            System.out.println("Please enter length of the " + name + " lab");
             try {
                 length = Integer.parseInt(scanner.nextLine());
                 break;
@@ -247,7 +240,7 @@ public class Agenda {
         }
         boolean[] weekDays = inputWeekDays();
         try {
-            s.addLab(code + num, startTime, length, weekDays);
+            s.addItem("Lab", name, startTime, length, weekDays);
         } catch (InvalidArgumentException e) {
             System.out.println("You have entered invalid information.");
         }

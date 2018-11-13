@@ -6,7 +6,7 @@ import model.Finder;
 import java.util.Arrays;
 import java.util.Objects;
 
-public abstract class ScheduleItem implements Finder {
+public class ScheduleItem implements Finder {
     protected String name;
     protected String itemType;
     protected int startTime;
@@ -14,9 +14,9 @@ public abstract class ScheduleItem implements Finder {
     protected int endTime;
     protected boolean[] weekDays;
 
-    public ScheduleItem (String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
+    public ScheduleItem (String itemType, String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         if (inputsValid(name, startTime, length, weekDays)) {
-            this.itemType = "";
+            this.itemType = itemType;
             this.name = name;
             this.length = length;
             this.startTime = startTime;
@@ -32,6 +32,10 @@ public abstract class ScheduleItem implements Finder {
         }
     }
 
+    public String getType() {
+        return this.itemType;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -45,6 +49,7 @@ public abstract class ScheduleItem implements Finder {
         return this.getName().equals(name);
     }
 
+    @Override
     public String toString() {
         return "---------------------------\n" + getName() +
                 "\nStart time: " + startTime +
