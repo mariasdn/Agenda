@@ -4,18 +4,20 @@ package ui;
 
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidWeekDayException;
+import observer.ScheduleObserver;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Agenda {
+public class Agenda implements ScheduleObserver {
     public Schedule s;
     private  Scanner scanner;
 //    private ToDoList tdl;
 
     public Agenda() {
         s = new Schedule();
+        s.addObserver(this);
         scanner= new Scanner(System.in);
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File("Save.txt")));
@@ -87,6 +89,12 @@ public class Agenda {
             }
             System.out.println("\n");
         }
+    }
+
+    @Override
+    public void update(ScheduleItem item){
+        System.out.println("\nNew item was added to the schedule!\n" +
+        item.toString());
     }
 
     private void editItems() {
@@ -270,8 +278,6 @@ public class Agenda {
                 }
             } catch (InvalidWeekDayException e) {
                 System.out.println(e.getMessage());
-            } finally {
-                System.out.println("Please tyr again");
             }
         }
     }

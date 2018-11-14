@@ -5,13 +5,14 @@ import exceptions.InvalidArgumentException;
 import exceptions.InvalidWeekDayException;
 import model.Editor;
 import model.Viewer;
+import observer.Subject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
 
-public class Schedule implements Editor, Viewer {
+public class Schedule extends Subject implements Editor, Viewer {
 
     private ArrayList<ScheduleItem> items;
     private Map<String, ScheduleItem> itemMap;
@@ -23,20 +24,6 @@ public class Schedule implements Editor, Viewer {
     public Schedule() {
         items = new ArrayList<>();
         itemMap = new HashMap<>();
-
-        /*boolean[] b = {true, false, true, false, false};
-
-        Course courseA = new Course("COMM", "290", 8, 2, b);
-
-        Course courseB = new Course("COMM", "205", 10, 2, b);
-        courseB.setWeekDays(false, false, true, false, true);
-
-        Course courseC = new Course("COMM", "295", 9, 2, b);
-        courseC.setWeekDays(false, true, false, true, false);
-
-        courseList.add(courseA);
-        courseList.add(courseB);
-        courseList.add(courseC);*/
 
     }
 
@@ -143,6 +130,7 @@ public class Schedule implements Editor, Viewer {
             ScheduleItem newItem = new ScheduleItem(itemType,name, startTime, length, weekDays);
             items.add(newItem);
             itemMap.put(name,newItem);
+            notifyObservers(newItem);
         } catch (InvalidArgumentException e) {
             throw e;
         }
