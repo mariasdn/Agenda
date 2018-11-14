@@ -5,6 +5,7 @@ package ui;
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidWeekDayException;
 import observer.ScheduleObserver;
+import web.ReadWebPageEx;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -288,6 +289,11 @@ public class Agenda implements ScheduleObserver {
     }
 
     public static void main(String[] args) {
+        try {
+            ReadWebPageEx.printOutMessage();
+        } catch (IOException e) {
+            System.err.println("Message was not print");
+        }
         Agenda myAgenda = new Agenda();
         myAgenda.interactionOptions();
     }
