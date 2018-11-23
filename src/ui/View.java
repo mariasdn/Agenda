@@ -10,8 +10,9 @@ public class View extends JPanel {
     public View(MainAgenda mainAgenda){
         super();
         schedule = mainAgenda.getSchedule();
-        JTextArea text = new JTextArea("Hello");
+        JTextArea text = new JTextArea(10,10);
         text.setSize(300,300);
+        text.setEditable(false);
         text.setVisible(true);
         JButton viewAllScheduleButton = new JButton("View the entire schedule");
         viewAllScheduleButton.addActionListener(new ActionListener() {
@@ -42,7 +43,7 @@ public class View extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                text.setText("Hello");
+                text.setText("");
                 mainAgenda.getCardLayout().show(mainAgenda.getCards(), "Home");
             }
         });
