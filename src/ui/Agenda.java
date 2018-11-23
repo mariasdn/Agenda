@@ -7,6 +7,9 @@ import exceptions.InvalidWeekDayException;
 import observer.ScheduleObserver;
 import web.ReadWebPageEx;
 
+import javax.smartcardio.Card;
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -289,12 +292,11 @@ public class Agenda implements ScheduleObserver {
     }
 
     public static void main(String[] args) {
-        try {
-            ReadWebPageEx.printOutMessage();
-        } catch (IOException e) {
-            System.err.println("Message was not print");
-        }
         Agenda myAgenda = new Agenda();
-        myAgenda.interactionOptions();
+        JFrame frame = new JFrame("Agenda");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        CardLayout cl = new CardLayout();
+        frame.setVisible(true);
+        //myAgenda.interactionOptions();
     }
 }
