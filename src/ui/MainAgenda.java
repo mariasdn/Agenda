@@ -14,6 +14,7 @@ public class MainAgenda extends JFrame {
         super("Agenda");
         schedule = new Schedule();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(1000,700);
         cardLayout = new CardLayout();
         Container homePane = this.getContentPane();
         cards = new JPanel(cardLayout);
@@ -25,7 +26,6 @@ public class MainAgenda extends JFrame {
 
 
         homePane.add(cards);
-        this.pack();
         this.setVisible(true);
     }
 

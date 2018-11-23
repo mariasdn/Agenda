@@ -3,8 +3,6 @@ package ui;
 
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidWeekDayException;
-import model.Editor;
-import model.Viewer;
 import observer.Subject;
 
 import java.util.HashMap;
@@ -12,7 +10,7 @@ import java.util.Map;
 
 import java.util.ArrayList;
 
-public class Schedule extends Subject implements Editor, Viewer {
+public class Schedule extends Subject {
 
     private ArrayList<ScheduleItem> items;
     private Map<String, ScheduleItem> itemMap;
@@ -24,10 +22,22 @@ public class Schedule extends Subject implements Editor, Viewer {
     public Schedule() {
         items = new ArrayList<>();
         itemMap = new HashMap<>();
+        boolean[] weekD = {true,true,false,false,true};
+        try{
+            addItem("Course","COMM 101", 12,2, weekD);
+            addItem("Course","COMM 102", 12,2, weekD);
+            addItem("Course","COMM 103", 12,2, weekD);
+            addItem("Course","COMM 104", 12,2, weekD);
+            addItem("Course","COMM 105", 12,2, weekD);
+        } catch(InvalidArgumentException e) {
+
+        }
 
     }
 
-    public void viewSchedule() {
+    public String[] viewSchedule() {
+        String[] result = new String[items.size()+3];
+        int index = 0;
         ArrayList<ScheduleItem> courseList = new ArrayList<>();
         ArrayList<ScheduleItem> labList = new ArrayList<>();
         ArrayList<ScheduleItem> activityList = new ArrayList<>();
@@ -35,24 +45,30 @@ public class Schedule extends Subject implements Editor, Viewer {
         for(ScheduleItem si: items) {
             if (si.getType().equals("Course")) {
                 courseList.add(si);
-            } else if (si.getType().equals("Lab")){
+            } else if (si.getType().equals("\nLab")){
                 labList.add(si);
-            } else if (si.getType().equals("Activity")){
+            } else if (si.getType().equals("\nActivity")){
                 activityList.add(si);
             }
         }
-        System.out.println("Courses:");
+        result[index] = "Courses:";
         for (ScheduleItem c : courseList) {
-            System.out.println(c);
+            index ++;
+            result[index] = c.toString();
         }
-        System.out.println("\nLabs:");
+        index++;
+        result[index] = "Labs:";
         for (ScheduleItem l : labList) {
-            System.out.println(l);
+            index ++;
+            result[index] = l.toString();
         }
-        System.out.println("\nActivities:");
+        index++;
+        result[index] = "Activities:";
         for (ScheduleItem a : activityList) {
-            System.out.println(a);
+            index++;
+            result[index] = a.toString();
         }
+        return result;
     }
 
     public void viewItemsOnDay(String day) throws InvalidWeekDayException{

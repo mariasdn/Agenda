@@ -1,12 +1,8 @@
 package ui;
 
 import exceptions.InvalidArgumentException;
-import model.Finder;
 
-import java.util.Arrays;
-import java.util.Objects;
-
-public class ScheduleItem implements Finder {
+public class ScheduleItem {
     protected String name;
     protected String itemType;
     protected int startTime;
