@@ -13,6 +13,7 @@ public class View extends JPanel {
 
     public View(MainAgenda mainAgenda){
         super();
+        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         schedule = mainAgenda.getSchedule();
 
         JTextArea text = new JTextArea(20,20);
@@ -90,17 +91,23 @@ public class View extends JPanel {
 
         JPanel viewOptionsPanel = new JPanel();
         viewOptionsPanel.setLayout(new BoxLayout(viewOptionsPanel, BoxLayout.Y_AXIS));
+        viewOptionsPanel.add(Box.createVerticalGlue());
+        viewOptionsPanel.add(Box.createVerticalGlue());
         viewOptionsPanel.add(viewAllScheduleButton);
         viewAllScheduleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         viewOptionsPanel.add(Box.createVerticalGlue());
         viewOptionsPanel.add(viewDayPanel);
         viewDayPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        viewOptionsPanel.add(Box.createVerticalGlue());
         viewOptionsPanel.add(itemSearchPanel);
         itemSearchPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        viewOptionsPanel.add(Box.createVerticalGlue());
+        viewOptionsPanel.add(Box.createVerticalGlue());
 
+        this.add(Box.createHorizontalGlue());
         this.add(textPane);
         this.add(viewOptionsPanel);
         this.add(backButton);
+        this.add(Box.createHorizontalGlue());
+
     }
 }
