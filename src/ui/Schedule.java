@@ -112,8 +112,7 @@ public class Schedule extends Subject {
         if (itemMap.get(subject)!= null) {
             return itemMap.get(subject).toString();
         }
-        return "!!!! There are either no items with this name in your schedule !!!!\n" +
-                    "                  or entered name is incorrect.                \n";
+        return "!!!!  There are either no items with  !!!!\n        this name in your schedule\n       or entered name is incorrect.\n";
     }
 
     public void addItem(String[] sr) {
