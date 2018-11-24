@@ -10,7 +10,7 @@ public class Edit extends JPanel {
     public Edit(MainAgenda mainAgenda){
         super();
         schedule = mainAgenda.getSchedule();
-        JButton backButton = new JButton("Back");
+        JButton backButton = new JButton("< Back");
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -51,19 +51,19 @@ public class Schedule extends Subject {
                 activityList.add(si);
             }
         }
-        result[index] = "Courses:";
+        result[index] = "===========================\nCourses:";
         for (ScheduleItem c : courseList) {
             index ++;
             result[index] = c.toString();
         }
         index++;
-        result[index] = "Labs:";
+        result[index] = "===========================\nLabs:";
         for (ScheduleItem l : labList) {
             index ++;
             result[index] = l.toString();
         }
         index++;
-        result[index] = "Activities:";
+        result[index] = "===========================\nActivities:";
         for (ScheduleItem a : activityList) {
             index++;
             result[index] = a.toString();
@@ -71,9 +71,9 @@ public class Schedule extends Subject {
         return result;
     }
 
-    public void viewItemsOnDay(String day) throws InvalidWeekDayException{
+    public ArrayList<String> viewItemsOnDay(String day) throws InvalidWeekDayException{
         if (ScheduleItem.isDayValid(day)) {
-
+            ArrayList<String> result = new ArrayList<String>();
             ArrayList<ScheduleItem> courseList = new ArrayList<>();
             ArrayList<ScheduleItem> labList = new ArrayList<>();
             ArrayList<ScheduleItem> activityList = new ArrayList<>();
@@ -89,34 +89,31 @@ public class Schedule extends Subject {
                     }
                 }
             }
-            System.out.println("Courses:");
+            result.add("===========================\nCourses:");
             for (ScheduleItem c : courseList) {
-                System.out.println(c);
+                result.add(c.toString());
             }
-            System.out.println("\nLabs:");
+            result.add("===========================\nLabs:");
             for (ScheduleItem l : labList) {
-                System.out.println(l);
+                result.add(l.toString());
             }
-            System.out.println("\nActivities:");
+            result.add("===========================\nActivities:");
             for (ScheduleItem a : activityList) {
-                System.out.println(a);
+                result.add(a.toString());
             }
+            return result;
 
         } else {
             throw new InvalidWeekDayException("You have entered an invalid week day.");
         }
     }
 
-    public void viewItemsByName(String subject) {
-        boolean areThereNone = true;
+    public String viewItemsByName(String subject) {
         if (itemMap.get(subject)!= null) {
-            System.out.println(itemMap.get(subject));
-            areThereNone = false;
+            return itemMap.get(subject).toString();
         }
-        if (areThereNone) {
-            System.out.println("!!!! There are either no items with this name in your schedule !!!!\n" +
-                    "!!!!              or entered name is incorrect.                !!!!\n");
-        }
+        return "!!!! There are either no items with this name in your schedule !!!!\n" +
+                    "                  or entered name is incorrect.                \n";
     }
 
     public void addItem(String[] sr) {
