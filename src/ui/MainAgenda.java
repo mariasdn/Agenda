@@ -21,6 +21,8 @@ public class MainAgenda extends JFrame {
         cards.add(new Home(this), "Home");
         cards.add(new Edit(this),"Edit");
         cards.add(new View(this), "View");
+        cards.add(new AddItem(this),"AddItem");
+        cards.add(new DeleteItem(this), "DeleteItem");
 
 
 
