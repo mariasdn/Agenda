@@ -36,15 +36,15 @@ public class View extends JPanel {
         });
 
         String[] dayOptions = {"m","t","w","th","f"};
-        JComboBox<String> daySelection = new JComboBox<String>(dayOptions);
+        String[] fullDayOptions = {"Monday","Tuesday","Wednesday","Thursday","Friday"};
+        JComboBox<String> daySelection = new JComboBox<String>(fullDayOptions);
 
         JButton viewDayScheduleButton = new JButton("View the schedule on a certain day");
         viewDayScheduleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedDay = dayOptions[daySelection.getSelectedIndex()];
-                text.setText(selectedDay);
-                text.setText("");
+                text.setText(fullDayOptions[daySelection.getSelectedIndex()] + ":\n\n");
                 try{
                     ArrayList<String> allScheduleArray = schedule.viewItemsOnDay(selectedDay);
                     for (String s: allScheduleArray){
@@ -103,8 +103,14 @@ public class View extends JPanel {
         viewOptionsPanel.add(Box.createVerticalGlue());
         viewOptionsPanel.add(Box.createVerticalGlue());
 
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        textPanel.add(Box.createRigidArea(new Dimension(0,50)));
+        textPanel.add(textPane);
+        textPanel.add(Box.createRigidArea(new Dimension(0,50)));
+
         this.add(Box.createHorizontalGlue());
-        this.add(textPane);
+        this.add(textPanel);
         this.add(viewOptionsPanel);
         this.add(backButton);
         this.add(Box.createHorizontalGlue());

@@ -15,9 +15,10 @@ public class AddItem extends JPanel {
         schedule = mainAgenda.getSchedule();
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        JTextArea text = new JTextArea(10,10);
+        JTextArea text = new JTextArea(10,40);
         JScrollPane textPane = new JScrollPane(text);
         textPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        textPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         //text.setSize(50,50);
         text.setEditable(false);
         text.setVisible(true);
@@ -110,10 +111,15 @@ public class AddItem extends JPanel {
         weekDaysPanel.add(weekDaysLabel);
         weekDaysPanel.add(weekDaysCheckListPanel);
 
-
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        textPanel.add(Box.createRigidArea(new Dimension(0,250)));
+        textPanel.add(textPane);
+        textPanel.add(Box.createRigidArea(new Dimension(0,250)));
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(Box.createRigidArea(new Dimension(0,200)));
         mainPanel.add(addTypePanel);
         mainPanel.add(addNamePanel);
         mainPanel.add(startTimePanel);
@@ -121,15 +127,16 @@ public class AddItem extends JPanel {
         mainPanel.add(weekDaysPanel);
         mainPanel.add(enter);
         enter.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        mainPanel.add(Box.createRigidArea(new Dimension(0,200)));
 
-        this.add(Box.createHorizontalGlue());
-        this.add(text);
-        this.add(Box.createHorizontalGlue());
+        this.add(Box.createRigidArea(new Dimension(40,0)));
+        this.add(textPanel);
+        this.add(Box.createRigidArea(new Dimension(50,0)));
         this.add(mainPanel);
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.add(Box.createHorizontalGlue());
+        this.add(Box.createRigidArea(new Dimension(50,0)));
         this.add(backButton);
         backButton.setAlignmentY(Component.TOP_ALIGNMENT);
-        this.add(Box.createHorizontalGlue());
+        this.add(Box.createRigidArea(new Dimension(40,0)));
     }
 }

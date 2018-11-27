@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,11 +40,30 @@ public class DeleteItem extends JPanel {
             }
         });
 
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        textPanel.add(Box.createRigidArea(new Dimension(0,250)));
+        textPanel.add(text);
+        textPanel.add(Box.createRigidArea(new Dimension(0,250)));
 
-        this.add(text);
-        this.add(nameItemLabel);
-        this.add(itemName);
-        this.add(enter);
+
+        JPanel nameEntryPanel = new JPanel();
+        nameEntryPanel.setLayout(new BoxLayout(nameEntryPanel, BoxLayout.Y_AXIS));
+        JPanel namePanel = new JPanel();
+        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
+        namePanel.add(nameItemLabel);
+        namePanel.add(itemName);
+        nameEntryPanel.add(Box.createRigidArea(new Dimension(0,300)));
+        nameEntryPanel.add(namePanel);
+        nameEntryPanel.add(enter);
+        nameEntryPanel.add(Box.createRigidArea(new Dimension(0,300)));
+
+        this.add(Box.createRigidArea(new Dimension(40,0)));
+        this.add(textPanel);
+        this.add(Box.createRigidArea(new Dimension(40,0)));
+        this.add(nameEntryPanel);
+        this.add(Box.createRigidArea(new Dimension(40,0)));
         this.add(backButton);
+        this.add(Box.createRigidArea(new Dimension(40,0)));
     }
 }
