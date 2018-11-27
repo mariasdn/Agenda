@@ -52,7 +52,7 @@ public class Edit extends JPanel {
         deleteItemButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(Box.createVerticalGlue());
         this.add(saveItemButton);
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        saveItemButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(Box.createVerticalGlue());
         this.add(backButton);
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
