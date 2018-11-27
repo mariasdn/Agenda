@@ -3,13 +3,8 @@ Course,COMM 102,12,2,true,true,false,false,true
 Course,COMM 103,12,2,true,true,false,false,true
 Course,COMM 104,12,2,true,true,false,false,true
 Course,COMM 105,12,2,true,true,false,false,true
-Course,COMM 101,12,2,true,true,false,false,true
-Course,COMM 102,12,2,true,true,false,false,true
-Course,COMM 103,12,2,true,true,false,false,true
-Course,COMM 104,12,2,true,true,false,false,true
-Course,COMM 105,12,2,true,true,false,false,true
 Course,COMM 205,10,2,false,false,true,false,true
 Course,COMM 295,9,2,false,true,false,true,false
 Course,CPSC 210,14,2,true,false,true,false,true
-Lab,CPSC 210,13,3,true,false,false,true,false
+Lab,CPSC 110,13,3,true,false,false,true,false
 Activity,Volleyball,18,3,false,true,false,false,true

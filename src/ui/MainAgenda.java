@@ -16,7 +16,7 @@ public class MainAgenda extends JFrame {
         super("Agenda");
         schedule = new Schedule();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(900,440);
+        this.setSize(1100,650);
         cardLayout = new CardLayout();
         Container homePane = this.getContentPane();
         cards = new JPanel(cardLayout);

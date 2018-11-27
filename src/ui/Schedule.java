@@ -21,16 +21,6 @@ public class Schedule {
     public Schedule() {
         items = new ArrayList<>();
         itemMap = new HashMap<>();
-        boolean[] weekD = {true,true,false,false,true};
-        try{
-            addItem("Course","COMM 101", 12,2, weekD);
-            addItem("Course","COMM 102", 12,2, weekD);
-            addItem("Course","COMM 103", 12,2, weekD);
-            addItem("Course","COMM 104", 12,2, weekD);
-            addItem("Course","COMM 105", 12,2, weekD);
-        } catch(InvalidArgumentException e) {
-
-        }
 
     }
 

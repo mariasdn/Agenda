@@ -15,8 +15,10 @@ public class AddItem extends JPanel {
         schedule = mainAgenda.getSchedule();
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        JTextArea text = new JTextArea(20,20);
-        text.setSize(100,50);
+        JTextArea text = new JTextArea(10,10);
+        JScrollPane textPane = new JScrollPane(text);
+        textPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        //text.setSize(50,50);
         text.setEditable(false);
         text.setVisible(true);
         text.setText("Please select information about an item \n you would like to add to your schedule.");
