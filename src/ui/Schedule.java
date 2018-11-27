@@ -3,14 +3,13 @@ package ui;
 
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidWeekDayException;
-import observer.Subject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
 
-public class Schedule extends Subject {
+public class Schedule {
 
     private ArrayList<ScheduleItem> items;
     private Map<String, ScheduleItem> itemMap;
@@ -45,9 +44,9 @@ public class Schedule extends Subject {
         for(ScheduleItem si: items) {
             if (si.getType().equals("Course")) {
                 courseList.add(si);
-            } else if (si.getType().equals("\nLab")){
+            } else if (si.getType().equals("Lab")){
                 labList.add(si);
-            } else if (si.getType().equals("\nActivity")){
+            } else if (si.getType().equals("Activity")){
                 activityList.add(si);
             }
         }
@@ -137,12 +136,12 @@ public class Schedule extends Subject {
         }
     }
 
-    public void addItem(String itemType, String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
+    public String addItem(String itemType, String name, int startTime, int length, boolean[] weekDays) throws InvalidArgumentException {
         try {
             ScheduleItem newItem = new ScheduleItem(itemType,name, startTime, length, weekDays);
             items.add(newItem);
             itemMap.put(name,newItem);
-            notifyObservers(newItem);
+            return newItem.toString();
         } catch (InvalidArgumentException e) {
             throw e;
         }
@@ -157,7 +156,7 @@ public class Schedule extends Subject {
     }
 
 
-    public void deleteItem(String name){
+    public String deleteItem(String name){
         boolean areThereNone = true;
         ScheduleItem si = itemMap.get(name);
         if (si!= null) {
@@ -171,6 +170,7 @@ public class Schedule extends Subject {
             System.out.println("!!!! There are either no items with this name in your schedule !!!!\n" +
                     "!!!!              or entered name is incorrect.                !!!!\n");
         }
+        return si.toString();
     }
 
 }

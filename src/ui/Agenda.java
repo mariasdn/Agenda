@@ -4,24 +4,20 @@ package ui;
 
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidWeekDayException;
-import observer.ScheduleObserver;
-import web.ReadWebPageEx;
 
-import javax.smartcardio.Card;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Agenda implements ScheduleObserver {
+public class Agenda {
     public Schedule s;
     private  Scanner scanner;
 //    private ToDoList tdl;
 
     public Agenda() {
         s = new Schedule();
-        s.addObserver(this);
         scanner= new Scanner(System.in);
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File("Save.txt")));
@@ -95,11 +91,6 @@ public class Agenda implements ScheduleObserver {
         }
     }
 
-    @Override
-    public void update(ScheduleItem item){
-        System.out.println("\nNew item was added to the schedule!\n" +
-        item.toString());
-    }
 
     private void editItems() {
         while (true) {
@@ -135,8 +126,6 @@ public class Agenda implements ScheduleObserver {
             pw.close();
         } catch (FileNotFoundException e) {
             System.exit(-1);
-        } finally {
-            System.out.println("Save is over");
         }
     }
 

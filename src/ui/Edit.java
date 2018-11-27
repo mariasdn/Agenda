@@ -11,8 +11,8 @@ public class Edit extends JPanel {
     public Edit(MainAgenda mainAgenda){
         super();
         schedule = mainAgenda.getSchedule();
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         JButton addItemButton = new JButton("Add an Item to your schedule");
         addItemButton.addActionListener(new ActionListener() {
             @Override
@@ -20,11 +20,20 @@ public class Edit extends JPanel {
                 mainAgenda.getCardLayout().show(mainAgenda.getCards(), "AddItem");
             }
         });
+
         JButton deleteItemButton = new JButton("Delete an Item from your schedule");
         deleteItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mainAgenda.getCardLayout().show(mainAgenda.getCards(), "DeleteItem");
+            }
+        });
+
+        JButton saveItemButton = new JButton("Save changes in your schedule");
+        saveItemButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainAgenda.saveEdits();
             }
         });
 
@@ -41,6 +50,9 @@ public class Edit extends JPanel {
         this.add(Box.createVerticalGlue());
         this.add(deleteItemButton);
         deleteItemButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(Box.createVerticalGlue());
+        this.add(saveItemButton);
+        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(Box.createVerticalGlue());
         this.add(backButton);
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);

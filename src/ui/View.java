@@ -57,7 +57,7 @@ public class View extends JPanel {
         });
 
         JTextField itemSearch = new JTextField(20);
-        JLabel viewItemLable = new JLabel("View a certain item in your schedule");
+        JLabel viewItemLabel = new JLabel("View a certain item in your schedule");
 
         JButton enter = new JButton("Enter");
         enter.addActionListener(new ActionListener() {
@@ -84,7 +84,7 @@ public class View extends JPanel {
         JPanel itemSearchPanel = new JPanel();
         JPanel itemSearchPanel2 = new JPanel();
         itemSearchPanel.setLayout(new BoxLayout(itemSearchPanel, BoxLayout.Y_AXIS));
-        itemSearchPanel.add(viewItemLable);
+        itemSearchPanel.add(viewItemLabel);
         itemSearchPanel2.add(itemSearch);
         itemSearchPanel2.add(enter);
         itemSearchPanel.add(itemSearchPanel2);
