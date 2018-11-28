@@ -72,6 +72,7 @@ public class AddItem extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                itemName.setText("");
                 text.setText("Please select information about an item \n you would like to add to your schedule.");
                 mainAgenda.getCardLayout().show(mainAgenda.getCards(), "Edit");
             }
@@ -82,21 +83,25 @@ public class AddItem extends JPanel {
         addTypePanel.setLayout(new BoxLayout(addTypePanel, BoxLayout.X_AXIS));
         addTypePanel.add(typeItemLabel);
         addTypePanel.add(itemTypeSelection);
+        addTypePanel.setBackground(new Color(226,255,255));
 
         JPanel addNamePanel = new JPanel();
         addNamePanel.setLayout(new BoxLayout(addNamePanel, BoxLayout.X_AXIS));
         addNamePanel.add(nameItemLabel);
         addNamePanel.add(itemName);
+        addNamePanel.setBackground(new Color(226,255,255));
 
         JPanel startTimePanel = new JPanel();
         startTimePanel.setLayout(new BoxLayout(startTimePanel, BoxLayout.X_AXIS));
         startTimePanel.add(startTimeItemLabel);
         startTimePanel.add(startTimeSelection);
+        startTimePanel.setBackground(new Color(226,255,255));
 
         JPanel lengthPanel = new JPanel();
         lengthPanel.setLayout(new BoxLayout(lengthPanel, BoxLayout.X_AXIS));
         lengthPanel.add(lengthItemLabel);
         lengthPanel.add(lengthSelection);
+        lengthPanel.setBackground(new Color(226,255,255));
 
         JPanel weekDaysCheckListPanel = new JPanel();
         weekDaysCheckListPanel.setLayout(new BoxLayout(weekDaysCheckListPanel, BoxLayout.Y_AXIS));
@@ -105,17 +110,20 @@ public class AddItem extends JPanel {
         weekDaysCheckListPanel.add(wCheck);
         weekDaysCheckListPanel.add(thCheck);
         weekDaysCheckListPanel.add(fCheck);
+        weekDaysCheckListPanel.setBackground(new Color(226,255,255));
 
         JPanel weekDaysPanel = new JPanel();
         weekDaysPanel.setLayout(new BoxLayout(weekDaysPanel, BoxLayout.X_AXIS));
         weekDaysPanel.add(weekDaysLabel);
         weekDaysPanel.add(weekDaysCheckListPanel);
+        weekDaysPanel.setBackground(new Color(226,255,255));
 
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.add(Box.createRigidArea(new Dimension(0,250)));
         textPanel.add(textPane);
         textPanel.add(Box.createRigidArea(new Dimension(0,250)));
+        textPanel.setBackground(new Color(226,255,255));
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -128,6 +136,7 @@ public class AddItem extends JPanel {
         mainPanel.add(enter);
         enter.setAlignmentX(Component.RIGHT_ALIGNMENT);
         mainPanel.add(Box.createRigidArea(new Dimension(0,200)));
+        mainPanel.setBackground(new Color(226,255,255));
 
         this.add(Box.createRigidArea(new Dimension(40,0)));
         this.add(textPanel);
@@ -138,5 +147,6 @@ public class AddItem extends JPanel {
         this.add(backButton);
         backButton.setAlignmentY(Component.TOP_ALIGNMENT);
         this.add(Box.createRigidArea(new Dimension(40,0)));
+        this.setBackground(new Color(226,255,255));
     }
 }

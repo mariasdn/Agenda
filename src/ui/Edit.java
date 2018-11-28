@@ -57,5 +57,6 @@ public class Edit extends JPanel {
         this.add(backButton);
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(Box.createVerticalGlue());
+        this.setBackground(new Color(226,255,255));
     }
 }

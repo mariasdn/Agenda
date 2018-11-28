@@ -80,14 +80,17 @@ public class View extends JPanel {
         JPanel viewDayPanel = new JPanel();
         viewDayPanel.add(daySelection);
         viewDayPanel.add(viewDayScheduleButton);
+        viewDayPanel.setBackground(new Color(226,255,255));
 
         JPanel itemSearchPanel = new JPanel();
         JPanel itemSearchPanel2 = new JPanel();
+        itemSearchPanel2.setBackground(new Color(226,255,255));
         itemSearchPanel.setLayout(new BoxLayout(itemSearchPanel, BoxLayout.Y_AXIS));
         itemSearchPanel.add(viewItemLabel);
         itemSearchPanel2.add(itemSearch);
         itemSearchPanel2.add(enter);
         itemSearchPanel.add(itemSearchPanel2);
+        itemSearchPanel.setBackground(new Color(226,255,255));
 
         JPanel viewOptionsPanel = new JPanel();
         viewOptionsPanel.setLayout(new BoxLayout(viewOptionsPanel, BoxLayout.Y_AXIS));
@@ -102,18 +105,21 @@ public class View extends JPanel {
         itemSearchPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         viewOptionsPanel.add(Box.createVerticalGlue());
         viewOptionsPanel.add(Box.createVerticalGlue());
+        viewOptionsPanel.setBackground(new Color(226,255,255));
 
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.add(Box.createRigidArea(new Dimension(0,50)));
         textPanel.add(textPane);
         textPanel.add(Box.createRigidArea(new Dimension(0,50)));
+        textPanel.setBackground(new Color(226,255,255));
 
         this.add(Box.createHorizontalGlue());
         this.add(textPanel);
         this.add(viewOptionsPanel);
         this.add(backButton);
         this.add(Box.createHorizontalGlue());
+        this.setBackground(new Color(226,255,255));
 
     }
 }

@@ -46,6 +46,7 @@ public class Home extends JPanel {
         this.add(editButton);
         editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(Box.createVerticalGlue());
+        this.setBackground(new Color(226,255,255));
 
     }
 }
